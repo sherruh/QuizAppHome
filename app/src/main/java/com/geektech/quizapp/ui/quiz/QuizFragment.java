@@ -45,11 +45,10 @@ public class QuizFragment extends Fragment {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
-            }
+        }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Log.d("ololo", String.valueOf(seekBar.getProgress()));
                 textAmount.setText(String.valueOf(seekBar.getProgress()));
             }
         });
@@ -57,7 +56,7 @@ public class QuizFragment extends Fragment {
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                QuizActivity.start(getActivity(),seekBarAmount.getProgress());
             }
         });
     }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IQuizRepository {
 
-    void getQuestions(int amount, QuestionsCallback callback);
+    void getQuestions(int amount,String type, QuestionsCallback callback);
 
     interface QuestionsCallback {
         void onSuccess(List<Question> questions);

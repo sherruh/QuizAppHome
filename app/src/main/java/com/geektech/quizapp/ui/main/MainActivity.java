@@ -20,6 +20,7 @@ import com.geektech.quizapp.model.Question;
 import com.geektech.quizapp.ui.PageChangeListener;
 import com.geektech.quizapp.ui.history.HistoryFragment;
 import com.geektech.quizapp.ui.quiz.QuizFragment;
+import com.geektech.quizapp.ui.settings.SettingsFragment;
 
 import java.util.List;
 
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     return HistoryFragment.newInstance();
             }
 
-            return HistoryFragment.newInstance();
+            return SettingsFragment.newInstance();
         }
 
         @Override

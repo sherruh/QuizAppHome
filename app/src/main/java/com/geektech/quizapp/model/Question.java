@@ -5,12 +5,16 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Question {
+    @SerializedName("category")
     private String category;
 
+    @SerializedName("type")
     private String type;
 
+    @SerializedName("difficulty")
     private String difficulty;
 
+    @SerializedName("question")
     private String question;
 
     @SerializedName("correct_answer")
@@ -18,6 +22,8 @@ public class Question {
 
     @SerializedName("incorrect_answers")
     private List<String> incorrectAnswers;
+
+    private String selectedAnswer;
 
     public Question(String category, String type, String difficulty, String question, String correctAnswer, List<String> incorrectAnswers) {
         this.category = category;
@@ -78,6 +84,14 @@ public class Question {
 
     @Override
     public String toString() {
-        return category + " " + type + " " + difficulty;
+        return question+" " + correctAnswer;
+    }
+
+    public String getSelectedAnswer() {
+        return selectedAnswer;
+    }
+
+    public void setSelectedAnswer(String selectedAnswer) {
+        this.selectedAnswer = selectedAnswer;
     }
 }

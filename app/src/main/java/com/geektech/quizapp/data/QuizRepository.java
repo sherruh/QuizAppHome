@@ -21,10 +21,8 @@ public class QuizRepository implements IQuizRepository {
             .create(QuizNetworkClient.class);
 
     @Override
-    public void getQuestions(int amount, QuestionsCallback callback) {
-        Call<QuestionsResponse> call = client.getQuestions(amount);
-
-        Log.d("ololo", call.request().url().toString());
+    public void getQuestions(int amount,String type, QuestionsCallback callback) {
+        Call<QuestionsResponse> call = client.getQuestions(amount,type);
 
         call.enqueue(new Callback<QuestionsResponse>() {
             @Override
@@ -51,7 +49,8 @@ public class QuizRepository implements IQuizRepository {
 
         @GET("/api.php")
         Call<QuestionsResponse> getQuestions(
-                @Query("amount") int amount
+                @Query("amount") int amount,
+                @Query("type") String type
         );
 
     }

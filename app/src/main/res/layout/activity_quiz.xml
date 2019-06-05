@@ -7,4 +7,25 @@
     android:layout_height="match_parent"
     tools:context=".ui.quiz.QuizActivity">
 
+    <ProgressBar
+        android:id="@+id/progress_bar_loading"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="194dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:indeterminate="true"
+        android:max="100"
+        android:min="10"
+        app:layout_constraintTop_toTopOf="parent"></ProgressBar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_questions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
 </android.support.constraint.ConstraintLayout>
