@@ -57,10 +57,7 @@ public class MultipleViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void setDefaultBackground() {
-        cardViewAnswer1.setBackgroundResource(R.color.colorDefault);
-        cardViewAnswer2.setBackgroundResource(R.color.colorDefault);
-        cardViewAnswer3.setBackgroundResource(R.color.colorDefault);
-        cardViewAnswer4.setBackgroundResource(R.color.colorDefault);
+
     }
 
     private void setListeners() {

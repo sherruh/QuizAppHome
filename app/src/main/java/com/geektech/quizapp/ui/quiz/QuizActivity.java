@@ -15,7 +15,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.geektech.quizapp.R;
 import com.geektech.quizapp.model.Question;
@@ -28,9 +30,11 @@ import java.util.List;
 public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.OnAnswerClick {
 
     public static int AMOUNT;
+    public static String DIFFICULTY;
 
-    public static void start(Context context, int amount) {
+    public static void start(Context context, int amount, String difficulty) {
         AMOUNT = amount;
+        DIFFICULTY = difficulty;
         Intent intent = new Intent(context,QuizActivity.class);
         context.startActivity(intent);
     }
@@ -39,6 +43,8 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
     private ProgressBar progressBarLoading;
     private RecyclerView recyclerQuestions;
     private QuestionsAdapter adapter;
+    private TextView textCategory;
+    private ImageView imageBack;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -46,6 +52,8 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        textCategory = findViewById(R.id.quiz_text_category);
+        imageBack = findViewById(R.id.quiz_image_back);
         initRecycler();
 
         progressBarLoading = findViewById(R.id.progress_bar_loading);
@@ -62,8 +70,13 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
         quizViewModel.isLoading.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean isLoading) {
-                if(isLoading) progressBarLoading.setVisibility(View.VISIBLE);
-                else progressBarLoading.setVisibility(View.GONE);
+                if(isLoading){
+                    progressBarLoading.setVisibility(View.VISIBLE);
+                    textCategory.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    progressBarLoading.setVisibility(View.GONE);
+                }
             }
         });
         quizViewModel.questionsLiveData.observe(this, new Observer<List<Question>>() {
@@ -84,6 +97,22 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 if (aBoolean) ResultActivity.start(QuizActivity.this);
+            }
+        });
+
+        quizViewModel.currentCategory.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textCategory.setText(s);
+                textCategory.setVisibility(View.VISIBLE);
+            }
+        });
+
+        quizViewModel.isBackPressAvailable.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if(aBoolean) imageBack.setVisibility(View.VISIBLE);
+                else imageBack.setVisibility(View.INVISIBLE);
             }
         });
     }
