@@ -1,10 +1,9 @@
-package com.geektech.quizapp.ui.quiz;
+package com.geektech.quizapp.ui.main;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.geektech.quizapp.R;
+import com.geektech.quizapp.ui.widgets.SeekBarChangeListener;
+import com.geektech.quizapp.ui.quiz.QuizActivity;
 
 
-public class QuizFragment extends Fragment {
+public class MainFragment extends Fragment {
 
-    public static QuizFragment newInstance(){ return new QuizFragment();}
+    public static MainFragment newInstance(){ return new MainFragment();}
 
     private Button buttonStart;
     private SeekBar seekBarAmount;
@@ -36,20 +37,12 @@ public class QuizFragment extends Fragment {
 
         textAmount = view.findViewById(R.id.text_amount_of_questions);
         seekBarAmount = view.findViewById(R.id.seekbar_amount_of_questions);
-        seekBarAmount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBarAmount.setOnSeekBarChangeListener(new SeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                textAmount.setText(String.valueOf(seekBar.getProgress()));
+                if (progress == 0) progress = 1;
+                seekBarAmount.setProgress(progress);
+                textAmount.setText(String.valueOf(progress));
             }
         });
         buttonStart = view.findViewById(R.id.button_start);

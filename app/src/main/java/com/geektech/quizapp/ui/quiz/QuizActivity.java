@@ -27,9 +27,11 @@ import java.util.List;
 
 public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.OnAnswerClick {
 
+    public static int AMOUNT;
+
     public static void start(Context context, int amount) {
+        AMOUNT = amount;
         Intent intent = new Intent(context,QuizActivity.class);
-        intent.putExtra("amount",amount);
         context.startActivity(intent);
     }
 
@@ -37,7 +39,6 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
     private ProgressBar progressBarLoading;
     private RecyclerView recyclerQuestions;
     private QuestionsAdapter adapter;
-    int amount;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -49,8 +50,14 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
 
         progressBarLoading = findViewById(R.id.progress_bar_loading);
         Intent intent = getIntent();
-        amount = intent.getIntExtra("amount",10);
-        quizViewModel = ViewModelProviders.of(this,new QuizViewModel(amount))
+
+        initViewModel();
+
+    }
+
+    private void initViewModel() {
+
+        quizViewModel = ViewModelProviders.of(this,new QuizViewModel())
                 .get(QuizViewModel.class);
         quizViewModel.isLoading.observe(this, new Observer<Boolean>() {
             @Override
@@ -63,6 +70,20 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
             @Override
             public void onChanged(@Nullable List<Question> questions) {
                 adapter.setData(questions);
+            }
+        });
+
+        quizViewModel.numberOfCurrentQuestion.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                recyclerQuestions.scrollToPosition(integer);
+            }
+        });
+
+        quizViewModel.isFinished.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (aBoolean) ResultActivity.start(QuizActivity.this);
             }
         });
     }
@@ -83,11 +104,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
 
 
     @Override
-    public void onNextClick(String answer, int adapterPosition) {
+    public void onClick(String answer, int adapterPosition) {
         quizViewModel.setAnswer(answer);
-        if(adapterPosition + 1 < amount) {
-            recyclerQuestions.scrollToPosition(adapterPosition + 1);
-            quizViewModel.onNextClick();
-        }else ResultActivity.start(this);
     }
 }

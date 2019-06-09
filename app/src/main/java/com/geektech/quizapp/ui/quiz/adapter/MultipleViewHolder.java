@@ -26,7 +26,6 @@ public class MultipleViewHolder extends RecyclerView.ViewHolder {
     CardView cardViewAnswer2;
     CardView cardViewAnswer3;
     CardView cardViewAnswer4;
-    Button buttonOk;
     Button buttonSkip;
     String selectedAnswer;
 
@@ -36,19 +35,11 @@ public class MultipleViewHolder extends RecyclerView.ViewHolder {
         selectedAnswer = "";
         mListener = listener;
 
-        buttonOk = itemView.findViewById(R.id.button_ok);
-        buttonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onNextClick(selectedAnswer,getAdapterPosition());
-            }
-        });
-
         buttonSkip = itemView.findViewById(R.id.button_skip);
         buttonSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onNextClick("",getAdapterPosition());
+                mListener.onClick("",getAdapterPosition());
             }
         });
 
@@ -77,23 +68,31 @@ public class MultipleViewHolder extends RecyclerView.ViewHolder {
             setDefaultBackground();
             v.setBackgroundResource(R.color.colorAccent);
             selectedAnswer = textViewAnswer1.getText().toString();
+            applyAnswer();
         });
         cardViewAnswer2.setOnClickListener(v -> {
             setDefaultBackground();
             v.setBackgroundResource(R.color.colorAccent);
             selectedAnswer = textViewAnswer2.getText().toString();
+            applyAnswer();
         });
         cardViewAnswer3.setOnClickListener(v -> {
             setDefaultBackground();
             v.setBackgroundResource(R.color.colorAccent);
             selectedAnswer = textViewAnswer3.getText().toString();
+            applyAnswer();
         });
         cardViewAnswer4.setOnClickListener(v -> {
             setDefaultBackground();
             v.setBackgroundResource(R.color.colorAccent);
             selectedAnswer = textViewAnswer4.getText().toString();
+            applyAnswer();
         });
 
+    }
+
+    private void applyAnswer() {
+        mListener.onClick(selectedAnswer,getAdapterPosition());
     }
 
     public void onBind(Question question) {

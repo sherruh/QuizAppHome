@@ -10,35 +10,33 @@ import android.util.Log;
 import com.geektech.quizapp.App;
 import com.geektech.quizapp.data.IQuizRepository;
 import com.geektech.quizapp.model.Question;
+import com.geektech.quizapp.ui.result.ResultActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuizViewModel extends ViewModel implements ViewModelProvider.Factory {
 
-    private int amount;
     MutableLiveData<List<Question>> questionsLiveData = new MutableLiveData<>();
     private List<Question> questionsCache;
     MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-    private int numberOfCurrentAnswer;
+    //private int numberOfCurrentAnswer;
+    MutableLiveData<Integer> numberOfCurrentQuestion = new MutableLiveData<>();
+    MutableLiveData<Boolean> isFinished = new MutableLiveData<>();
 
-    public QuizViewModel(int amount) {
+    public QuizViewModel() {
         isLoading.setValue(true);
-        this.amount = amount;
         questionsCache = new ArrayList<>();
-        loadQuestions(amount);
-        numberOfCurrentAnswer = 0;
+        loadQuestions();
+        numberOfCurrentQuestion.setValue(0);
     }
 
 
 
-    private void loadQuestions(int amount) {
-        App.quizRepository.getQuestions(amount,"multiple", new IQuizRepository.QuestionsCallback() {
+    private void loadQuestions() {
+        App.quizRepository.getQuestions(QuizActivity.AMOUNT,"multiple", new IQuizRepository.QuestionsCallback() {
             @Override
             public void onSuccess(List<Question> questions) {
-                for (Question question : questions) {
-                   // Log.d("ololo", question.toString());
-                }
                 questionsLiveData.setValue(questions);
                 questionsCache.addAll(questions);
                 isLoading.setValue(false);
@@ -51,19 +49,22 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
         });
     }
 
-    public void onNextClick() {
-        this.numberOfCurrentAnswer +=1;
+    public void nextQuestion() {
+        if(numberOfCurrentQuestion.getValue() + 1 < questionsCache.size() )
+            numberOfCurrentQuestion.setValue(numberOfCurrentQuestion.getValue() + 1);
+        else isFinished.setValue(true);
     }
 
     public void setAnswer(String answer){
-        questionsCache.get(numberOfCurrentAnswer).setSelectedAnswer(answer);
-        Log.d("ololo","answer was "+ questionsCache.get(numberOfCurrentAnswer)
+        questionsCache.get(numberOfCurrentQuestion.getValue()).setSelectedAnswer(answer);
+        Log.d("ololo","answer was "+ questionsCache.get(numberOfCurrentQuestion.getValue())
                 + " selected answer "+answer);
+        nextQuestion();
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new QuizViewModel(amount);
+        return (T) new QuizViewModel();
     }
 }

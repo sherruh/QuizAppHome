@@ -2,7 +2,6 @@ package com.geektech.quizapp.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,19 +9,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 
-import com.geektech.quizapp.App;
 import com.geektech.quizapp.R;
-import com.geektech.quizapp.data.IQuizRepository;
-import com.geektech.quizapp.model.Question;
-import com.geektech.quizapp.ui.PageChangeListener;
+import com.geektech.quizapp.ui.widgets.PageChangeListener;
 import com.geektech.quizapp.ui.history.HistoryFragment;
-import com.geektech.quizapp.ui.quiz.QuizFragment;
 import com.geektech.quizapp.ui.settings.SettingsFragment;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int i) {
             switch (i){
                 case 0:
-                    return QuizFragment.newInstance();
+                    return MainFragment.newInstance();
                 case 1:
                     return HistoryFragment.newInstance();
             }

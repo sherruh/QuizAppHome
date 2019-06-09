@@ -1,4 +1,4 @@
-package com.geektech.quizapp.ui;
+package com.geektech.quizapp.ui.widgets;
 
 import android.support.v4.view.ViewPager;
 
