@@ -1,4 +1,4 @@
-package com.geektech.quizapp.ui.quiz.adapter;
+package com.geektech.quizapp.ui.quiz.recycler;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -32,13 +32,13 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).
-                inflate(R.layout.view_holder_multiple_answers,viewGroup,false);
-        return new MultipleViewHolder(view,mListener);
+                inflate(R.layout.view_holder_question,viewGroup,false);
+        return new QuestionViewHolder(view,mListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        ((MultipleViewHolder)viewHolder).onBind(questions.get(i));
+        ((QuestionViewHolder)viewHolder).onBind(questions.get(i));
     }
 
 

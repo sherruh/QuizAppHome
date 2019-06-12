@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/question_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/page_big_margin"
+        android:layout_marginLeft="@dimen/page_big_margin"
+        android:padding="24dp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:text="Question"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/question_multiple_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/question_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/question_option_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/color_question_option_text"
+            android:text="Option 1"/>
+        <TextView
+            android:id="@+id/question_option_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/color_question_option_text"
+            android:text="Option 2"/>
+        <TextView
+            android:id="@+id/question_option_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/color_question_option_text"
+            android:background="@drawable/bg_question_option"
+            android:text="Option 3"/>
+        <TextView
+            android:id="@+id/question_option_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/color_question_option_text"
+            android:background="@drawable/bg_question_option"
+            android:text="Option 4"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/question_boolean_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/question_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/question_option_true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_question_option"
+            android:enabled="false"
+            android:text="Yes"
+            android:textColor="@drawable/color_question_option_text" />
+        <TextView
+            android:id="@+id/question_option_false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/color_question_option_text"
+            android:background="@drawable/bg_question_option"
+            android:text="No"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
