@@ -48,7 +48,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public interface OnAnswerClick {
-        void onClick(String answer, int adapterPosition);
+        void onClick(int answerPostition, int adapterPosition);
     }
 
 }

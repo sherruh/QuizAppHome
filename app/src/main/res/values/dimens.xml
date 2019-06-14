@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="page_big_margin">64dp</dimen>
+    <dimen name="title_text_size">26sp</dimen>
+    <dimen name="sub_title_text_size">20sp</dimen>
+    <dimen name="answer_text">17sp</dimen>
+    <dimen name="answer_width">320dp</dimen>
+    <dimen name="answer_height">47dp</dimen>
 </resources>

@@ -11,6 +11,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -62,7 +63,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
         textProgressOfQuestions = findViewById(R.id.quiz_progress_text);
 
         buttonSkip = findViewById(R.id.quiz_skip);
-        buttonSkip.setOnClickListener(view -> quizViewModel.setAnswer(""));
+        buttonSkip.setOnClickListener(view -> quizViewModel.setAnswer(99));
         imageBack = findViewById(R.id.quiz_image_back);
         imageBack.setOnClickListener(view -> quizViewModel.preqQuestion());
 
@@ -114,7 +115,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
         quizViewModel.currentCategory.observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textCategory.setText(s);
+                textCategory.setText(Html.fromHtml(s));
                 textCategory.setVisibility(View.VISIBLE);
             }
         });
@@ -148,7 +149,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
 
 
     @Override
-    public void onClick(String answer, int adapterPosition) {
-        quizViewModel.setAnswer(answer);
+    public void onClick(int answerPosition, int adapterPosition) {
+        quizViewModel.setAnswer(answerPosition);
     }
 }

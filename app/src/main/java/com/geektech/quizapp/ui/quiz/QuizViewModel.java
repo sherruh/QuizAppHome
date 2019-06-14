@@ -38,9 +38,10 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
     }
 
     private void loadQuestions() {
-        App.quizRepository.getQuestions(mAmount,"All", mDifficulty, new IQuizRepository.QuestionsCallback() {
+        App.quizRepository.getQuestions(mAmount,"", mDifficulty, new IQuizRepository.QuestionsCallback() {
             @Override
             public void onSuccess(List<Question> questions) {
+                for(Question question:questions) question.shuffleAnswers();
                 questionsLiveData.setValue(questions);
                 questionsCache.addAll(questions);
                 isLoading.setValue(false);
@@ -72,11 +73,11 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
         }
     }
 
-    public void setAnswer(String answer){
-        questionsCache.get(numberOfCurrentQuestion.getValue()).setSelectedAnswer(answer);
+    public void setAnswer(int answerPostion){
+        questionsCache.get(numberOfCurrentQuestion.getValue()).setSelectedAnswerPosition(answerPostion);
         Log.d("ololo","question was "+ questionsCache.get(numberOfCurrentQuestion.getValue())
-                + " difficulty was " +questionsCache.get(numberOfCurrentQuestion.getValue()).getDifficulty()
-                + " selected answer "+answer);
+                + " selected answer "+answerPostion + " correct answer "
+                +questionsCache.get(numberOfCurrentQuestion.getValue()).getCorrectAnswer());
         nextQuestion();
     }
 

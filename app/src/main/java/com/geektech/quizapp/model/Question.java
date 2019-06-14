@@ -4,6 +4,9 @@ import com.geektech.quizapp.model.enums.Difficulty;
 import com.geektech.quizapp.model.enums.Type;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Question {
@@ -27,6 +30,12 @@ public class Question {
 
     private String selectedAnswer;
 
+    private int selectedAnswerPosition;
+
+    private ArrayList<String> allAnswers;
+
+    private boolean isAnswered;
+
     public Question(String category, Type type, Difficulty difficulty, String question, String correctAnswer, List<String> incorrectAnswers) {
         this.category = category;
         this.type = type;
@@ -34,6 +43,34 @@ public class Question {
         this.question = question;
         this.correctAnswer = correctAnswer;
         this.incorrectAnswers = incorrectAnswers;
+        isAnswered = false;
+    }
+
+    public void shuffleAnswers(){
+        allAnswers = new ArrayList<>();
+        allAnswers.addAll(incorrectAnswers);
+        allAnswers.add(correctAnswer);
+        Collections.shuffle(allAnswers);
+    }
+
+    public void setSelectedAnswerPosition(int selectedAnswerPosition) {
+        this.selectedAnswerPosition = selectedAnswerPosition;
+        if(selectedAnswerPosition == 99) setSelectedAnswer("");
+        else if(type == Type.MULTIPLE) setSelectedAnswer(getAllAnswers().get(selectedAnswerPosition));
+        else if(selectedAnswerPosition == 0) setSelectedAnswer("True");
+        else setSelectedAnswer("False");
+    }
+
+    public List<String> getAllAnswers() {
+        return allAnswers;
+    }
+
+    public int getSelectedAnswerPosition() {
+        return selectedAnswerPosition;
+    }
+
+    public void setAllAnswers(ArrayList<String> allAnswers) {
+        this.allAnswers = allAnswers;
     }
 
     public String getCategory() {
@@ -95,5 +132,13 @@ public class Question {
 
     public void setSelectedAnswer(String selectedAnswer) {
         this.selectedAnswer = selectedAnswer;
+    }
+
+    public boolean isAnswered() {
+        return isAnswered;
+    }
+
+    public void setAnswered(boolean answered) {
+        isAnswered = answered;
     }
 }
