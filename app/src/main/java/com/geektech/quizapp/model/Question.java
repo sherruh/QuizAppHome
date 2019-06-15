@@ -36,7 +36,8 @@ public class Question {
 
     private boolean isAnswered;
 
-    public Question(String category, Type type, Difficulty difficulty, String question, String correctAnswer, List<String> incorrectAnswers) {
+    public Question(String category, Type type, Difficulty difficulty,
+                    String question, String correctAnswer, List<String> incorrectAnswers) {
         this.category = category;
         this.type = type;
         this.difficulty = difficulty;
