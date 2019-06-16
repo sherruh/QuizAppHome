@@ -10,7 +10,7 @@ public interface IHistoryStorage {
 
     QuizResult getQuizResult(long id);
 
-    void deleteQuizResult(int id);
+    void deleteQuizResult(long id);
 
     List<QuizResult> getAll();
 

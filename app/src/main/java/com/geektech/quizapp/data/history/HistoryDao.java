@@ -21,4 +21,10 @@ public interface HistoryDao {
 
     @Query("SELECT * FROM quiz_result")
     LiveData<List<QuizResult>> getAll();
+
+    @Query("DELETE FROM quiz_result WHERE id=:id ")
+    void delete(long id);
+
+    @Query("DELETE FROM quiz_result")
+    void deleteAll();
 }

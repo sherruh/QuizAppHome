@@ -24,8 +24,8 @@ public class HistoryStorage implements IHistoryStorage {
     }
 
     @Override
-    public void deleteQuizResult(int id) {
-        //TODO
+    public void deleteQuizResult(long id) {
+        dao.delete(id);
     }
 
     @Override
@@ -35,6 +35,6 @@ public class HistoryStorage implements IHistoryStorage {
 
     @Override
     public void deleteAll() {
-        //TODO
+        dao.deleteAll();
     }
 }
