@@ -57,9 +57,8 @@ public class ResultActivity extends AppCompatActivity {
             public void onChanged(QuizResult quizResult) {
                 textCorrectAnswers.setText(String.valueOf(quizResult.getCorrectAnswers()));
                 textDifficulty.setText(String.valueOf(quizResult.getDifficulty()));
-                textStats.setText(String.valueOf(quizResult.getCorrectAnswers()
-                        /quizResult.getQuestions().size()
-                        *100 + " %"));
+                double stats = (double) quizResult.getCorrectAnswers() / (double)quizResult.getQuestions().size() * 100.0;
+                textStats.setText((int)Math.round(stats) + " %");
                 textCategory.setText("Category: " + quizResult.getCategory());
             }
         });
