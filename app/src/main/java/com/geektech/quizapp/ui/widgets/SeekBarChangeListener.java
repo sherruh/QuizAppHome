@@ -1,6 +1,5 @@
 package com.geektech.quizapp.ui.widgets;
 
-import android.support.v4.app.Fragment;
 import android.widget.SeekBar;
 
 public abstract class SeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {

@@ -1,6 +1,6 @@
 package com.geektech.quizapp.ui.widgets;
 
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 
 public abstract class PageChangeListener implements ViewPager.OnPageChangeListener {
     @Override

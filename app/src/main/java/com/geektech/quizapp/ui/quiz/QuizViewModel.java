@@ -1,16 +1,18 @@
 package com.geektech.quizapp.ui.quiz;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.geektech.quizapp.App;
 import com.geektech.quizapp.data.IQuizRepository;
 import com.geektech.quizapp.model.Question;
+import com.geektech.quizapp.model.QuizResult;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class QuizViewModel extends ViewModel implements ViewModelProvider.Factory {
@@ -23,7 +25,7 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
     MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     MutableLiveData<Integer> numberOfCurrentQuestion = new MutableLiveData<>();
     MutableLiveData<String> currentCategory = new MutableLiveData<>();
-    SingleLiveEvent<Boolean> isFinishedQuiz = new SingleLiveEvent<>();
+    SingleLiveEvent<Long> isFinishedQuiz = new SingleLiveEvent<>();
     SingleLiveEvent<Boolean> isCanceledQuiz = new SingleLiveEvent<>();
 
     public QuizViewModel(int amount, String difficulty) {
@@ -38,6 +40,7 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
     }
 
     private void loadQuestions() {
+
         App.quizRepository.getQuestions(mAmount,"", mDifficulty, new IQuizRepository.QuestionsCallback() {
             @Override
             public void onSuccess(List<Question> questions) {
@@ -60,7 +63,37 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
             numberOfCurrentQuestion.setValue(numberOfCurrentQuestion.getValue() + 1);
             currentCategory.setValue(questionsCache.get(numberOfCurrentQuestion.getValue()).getCategory());
         }
-        else isFinishedQuiz.quizFinish();
+        else quizFinish();
+    }
+
+    private void quizFinish(){
+
+        String difficulty;
+        if (mDifficulty.equals("")) difficulty = "All";
+        else difficulty = mDifficulty;
+
+        QuizResult quizResult = new QuizResult(
+                0,
+                questionsCache,
+                getCorrectAnswersAmount(),
+                new Date(),
+                difficulty,
+                "All"
+        );
+
+        long id = App.historyStorage.saveQuizResult(quizResult);
+        Log.d("ololo","Correct Answers "+getCorrectAnswersAmount());
+        isFinishedQuiz.sendId(id);
+    }
+
+    private int getCorrectAnswersAmount() {
+        int amount = 0;
+        for (Question question : questionsCache){
+            if (question.getCorrectAnswer().equals(question.getSelectedAnswer())){
+                amount ++;
+            }
+        }
+        return amount;
     }
 
     public void preqQuestion(){
@@ -69,15 +102,15 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
             currentCategory.setValue(questionsCache.get(numberOfCurrentQuestion.getValue()).getCategory());
         }
         else{
-            isCanceledQuiz.quizFinish();
+            isCanceledQuiz.quizFinish(1);
         }
     }
 
     public void setAnswer(int answerPostion){
         questionsCache.get(numberOfCurrentQuestion.getValue()).setSelectedAnswerPosition(answerPostion);
-        Log.d("ololo","question was "+ questionsCache.get(numberOfCurrentQuestion.getValue())
-                + " selected answer "+answerPostion + " correct answer "
-                +questionsCache.get(numberOfCurrentQuestion.getValue()).getCorrectAnswer());
+        Question question = questionsCache.get(numberOfCurrentQuestion.getValue());
+        Log.d("ololo","correct answer "+ question.getCorrectAnswer() + " selected answer "
+                + question.getSelectedAnswer() );
         nextQuestion();
     }
 

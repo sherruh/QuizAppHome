@@ -1,17 +1,18 @@
 package com.geektech.quizapp.ui.quiz;
 
-import android.arch.lifecycle.Observer;
+import androidx.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -100,6 +101,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
             public void onChanged(@Nullable List<Question> questions) {
                 adapter.setData(questions);
                 progressBarQuestions.setMax(questions.size());
+                textProgressOfQuestions.setText(1 + "/"+ questions.size());
             }
         });
 
@@ -120,10 +122,10 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
             }
         });
 
-        quizViewModel.isFinishedQuiz.observe(this, new Observer<Boolean>() {
+        quizViewModel.isFinishedQuiz.observe(this, new Observer<Long>() {
             @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                ResultActivity.start(QuizActivity.this);
+            public void onChanged(Long id) {
+                ResultActivity.start(QuizActivity.this,id);
             }
         });
 
