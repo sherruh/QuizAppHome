@@ -35,7 +35,7 @@
             android:layout_width="320dp"
             android:layout_height="47dp"
             android:background="@drawable/bg_answer_button"
-            style="@style/Answer_Option"
+            style="@style/AnswerOption"
             android:gravity="center"
             android:layout_margin="4dp"
             android:text="Option 1"/>
@@ -44,7 +44,7 @@
             android:layout_width="320dp"
             android:layout_height="47dp"
             android:background="@drawable/bg_answer_button"
-            style="@style/Answer_Option"
+            style="@style/AnswerOption"
             android:gravity="center"
             android:layout_margin="4dp"
             android:text="Option 2"/>
@@ -53,7 +53,7 @@
             android:layout_width="320dp"
             android:layout_height="47dp"
             android:background="@drawable/bg_answer_button"
-            style="@style/Answer_Option"
+            style="@style/AnswerOption"
             android:gravity="center"
             android:layout_margin="4dp"
             android:text="Option 3"/>
@@ -62,7 +62,7 @@
             android:layout_width="320dp"
             android:layout_height="47dp"
             android:background="@drawable/bg_answer_button"
-            style="@style/Answer_Option"
+            style="@style/AnswerOption"
             android:gravity="center"
             android:layout_margin="4dp"
             android:text="Option 4"/>
@@ -85,7 +85,7 @@
             android:layout_width="320dp"
             android:layout_height="47dp"
             android:background="@drawable/bg_answer_button"
-            style="@style/Answer_Option"
+            style="@style/AnswerOption"
             android:gravity="center"
             android:layout_margin="10dp"
             android:text="Yes" />
@@ -94,7 +94,7 @@
             android:layout_width="320dp"
             android:layout_height="47dp"
             android:background="@drawable/bg_answer_button"
-            style="@style/Answer_Option"
+            style="@style/AnswerOption"
             android:gravity="center"
             android:layout_margin="10dp"
             android:text="No"

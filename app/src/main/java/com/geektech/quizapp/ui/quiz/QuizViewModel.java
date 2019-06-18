@@ -10,8 +10,10 @@ import com.geektech.quizapp.App;
 import com.geektech.quizapp.data.IQuizRepository;
 import com.geektech.quizapp.model.Question;
 import com.geektech.quizapp.model.QuizResult;
+import com.geektech.quizapp.model.enums.EType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -25,8 +27,8 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
     MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     MutableLiveData<Integer> numberOfCurrentQuestion = new MutableLiveData<>();
     MutableLiveData<String> currentCategory = new MutableLiveData<>();
-    SingleLiveEvent<Long> isFinishedQuiz = new SingleLiveEvent<>();
-    SingleLiveEvent<Boolean> isCanceledQuiz = new SingleLiveEvent<>();
+    SingleLiveEvent<Long> finishEvent = new SingleLiveEvent<>();
+    SingleLiveEvent<Boolean> cancelEvent = new SingleLiveEvent<>();
 
     public QuizViewModel(int amount, String difficulty) {
 
@@ -44,9 +46,8 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
         App.quizRepository.getQuestions(mAmount,"", mDifficulty, new IQuizRepository.QuestionsCallback() {
             @Override
             public void onSuccess(List<Question> questions) {
-                for(Question question:questions) question.shuffleAnswers();
-                questionsLiveData.setValue(questions);
-                questionsCache.addAll(questions);
+                shuffleAnswers(questions);
+                questionsLiveData.setValue(questionsCache);
                 isLoading.setValue(false);
                 currentCategory.setValue(questionsCache.get(numberOfCurrentQuestion.getValue()).getCategory());
             }
@@ -56,6 +57,18 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
                 Log.d("ololo", message);
             }
         });
+    }
+
+    private void shuffleAnswers(List<Question> questions){
+        for(Question question:questions){
+            ArrayList<String> allAnswers = new ArrayList<>();
+            allAnswers.addAll(question.getIncorrectAnswers());
+            allAnswers.add(question.getCorrectAnswer());
+            Collections.shuffle(allAnswers);
+            question.setAllAnswers(allAnswers);
+        }
+        questionsCache.clear();
+        questionsCache.addAll(questions);
     }
 
     public void nextQuestion() {
@@ -83,7 +96,7 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
 
         long id = App.historyStorage.saveQuizResult(quizResult);
         Log.d("ololo","Correct Answers "+getCorrectAnswersAmount());
-        isFinishedQuiz.sendId(id);
+        finishEvent.sendId(id);
     }
 
     private int getCorrectAnswersAmount() {
@@ -102,12 +115,26 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
             currentCategory.setValue(questionsCache.get(numberOfCurrentQuestion.getValue()).getCategory());
         }
         else{
-            isCanceledQuiz.quizFinish(1);
+            cancelEvent.quizFinish(1);
         }
+    }
+
+    public void skipAnswer(){
+        setAnswer(99);
     }
 
     public void setAnswer(int answerPostion){
         questionsCache.get(numberOfCurrentQuestion.getValue()).setSelectedAnswerPosition(answerPostion);
+
+        if(answerPostion == 99) questionsCache.get(numberOfCurrentQuestion.getValue()).setSelectedAnswer("");
+        else if(questionsCache.get(numberOfCurrentQuestion.getValue()).getType() == EType.MULTIPLE)
+            questionsCache.get(numberOfCurrentQuestion.getValue())
+                    .setSelectedAnswer(questionsCache.get(numberOfCurrentQuestion.getValue())
+                            .getAllAnswers().get(answerPostion));
+        else if(answerPostion == 0) questionsCache.get(numberOfCurrentQuestion.getValue())
+                .setSelectedAnswer("True");
+        else questionsCache.get(numberOfCurrentQuestion.getValue()).setSelectedAnswer("False");
+
         Question question = questionsCache.get(numberOfCurrentQuestion.getValue());
         Log.d("ololo","correct answer "+ question.getCorrectAnswer() + " selected answer "
                 + question.getSelectedAnswer() );

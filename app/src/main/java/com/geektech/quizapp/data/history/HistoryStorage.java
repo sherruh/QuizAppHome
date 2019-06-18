@@ -1,7 +1,8 @@
 package com.geektech.quizapp.data.history;
 
+import androidx.lifecycle.LiveData;
+
 import com.geektech.quizapp.model.QuizResult;
-import com.geektech.quizapp.ui.history.HistoryFragment;
 
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class HistoryStorage implements IHistoryStorage {
     }
 
     @Override
-    public List<QuizResult> getAll() {
-        return dao.getAll().getValue();
+    public LiveData<List<QuizResult>> getAll() {
+        return dao.getAll();
     }
 
     @Override

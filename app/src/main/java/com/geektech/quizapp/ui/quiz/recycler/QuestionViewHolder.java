@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.geektech.quizapp.R;
 import com.geektech.quizapp.model.Question;
-import com.geektech.quizapp.model.enums.Type;
+import com.geektech.quizapp.model.enums.EType;
 
 
 public class QuestionViewHolder extends RecyclerView.ViewHolder
@@ -58,7 +58,7 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder
     public void onBind(Question question) {
         textQuestion.setText(Html.fromHtml(question.getQuestion()));
 
-        if (question.getType() == Type.MULTIPLE) showMultipleContainer(question);
+        if (question.getType() == EType.MULTIPLE) showMultipleContainer(question);
         else showBooleanContainer(question);
 
 

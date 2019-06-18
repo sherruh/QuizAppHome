@@ -11,15 +11,26 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
-    <style name="Answer_Option">
+    <style name="AnswerOption">
         <item name="android:textColor">@color/blue</item>
         <item name="android:textSize">@dimen/answer_text</item>
+    </style>
+
+    <style name="SubTitleText" parent="AppTheme.BoldText">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/dark_purple</item>
+        <item name="android:padding">24dp</item>
     </style>
 
     <style name="TitleText" parent="AppTheme.BoldText">
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/dark_purple</item>
         <item name="android:padding">24dp</item>
+    </style>
+
+    <style name="GreyAccent">
+        <item name="colorAccent">@color/light_grey</item>
+        <item name="colorPrimary">@color/light_grey</item>
     </style>
 
     <style name="RegularBoldText" parent="AppTheme.BoldText">

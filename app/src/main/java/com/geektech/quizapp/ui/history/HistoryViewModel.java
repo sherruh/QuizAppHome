@@ -2,6 +2,7 @@ package com.geektech.quizapp.ui.history;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,10 +16,6 @@ import java.util.Queue;
 public class HistoryViewModel extends ViewModel {
     MutableLiveData<List<QuizResult>> quizResultsLiveData = new MutableLiveData<>();
 
-    public void getHistory(){
-        List<QuizResult> quizResults = App.historyStorage.getAll();
-        Log.d("ololo","History size " + quizResults.size());
-        quizResultsLiveData.setValue(quizResults);
-    }
+    LiveData<List<QuizResult>> history = App.historyStorage.getAll();
 
 }

@@ -16,7 +16,6 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.result.ResultActivity"></activity>
         <activity android:name=".ui.quiz.QuizActivity" />
-        <activity android:name=".ui.history.HistoryActivity" />
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

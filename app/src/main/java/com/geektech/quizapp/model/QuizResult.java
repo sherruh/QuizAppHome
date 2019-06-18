@@ -7,8 +7,6 @@ import androidx.room.TypeConverters;
 
 import com.geektech.quizapp.data.db.converters.QuestionConverter;
 import com.geektech.quizapp.data.db.converters.TimestampConverter;
-import com.geektech.quizapp.model.enums.Difficulty;
-import com.geektech.quizapp.model.enums.Type;
 
 import java.util.Date;
 import java.util.List;

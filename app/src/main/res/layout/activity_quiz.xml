@@ -17,7 +17,7 @@
         android:src="@drawable/ic_back_black"/>
 
     <TextView
-        android:theme="@style/TitleText"
+        android:theme="@style/SubTitleText"
         android:id="@+id/quiz_text_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,8 +81,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="180dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/quiz_skip"
         app:layout_constraintStart_toStartOf="@+id/quiz_image_back"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/quiz_text_category" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,10 @@
 package com.geektech.quizapp.model;
 
-import com.geektech.quizapp.model.enums.Difficulty;
-import com.geektech.quizapp.model.enums.Type;
+import com.geektech.quizapp.model.enums.EDifficulty;
+import com.geektech.quizapp.model.enums.EType;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,10 +13,10 @@ public class Question {
     private String category;
 
     @SerializedName("type")
-    private Type type;
+    private EType type;
 
     @SerializedName("difficulty")
-    private Difficulty difficulty;
+    private EDifficulty difficulty;
 
     @SerializedName("question")
     private String question;
@@ -36,7 +35,7 @@ public class Question {
 
     private boolean isAnswered;
 
-    public Question(String category, Type type, Difficulty difficulty,
+    public Question(String category, EType type, EDifficulty difficulty,
                     String question, String correctAnswer, List<String> incorrectAnswers) {
         this.category = category;
         this.type = type;
@@ -47,19 +46,8 @@ public class Question {
         isAnswered = false;
     }
 
-    public void shuffleAnswers(){
-        allAnswers = new ArrayList<>();
-        allAnswers.addAll(incorrectAnswers);
-        allAnswers.add(correctAnswer);
-        Collections.shuffle(allAnswers);
-    }
-
     public void setSelectedAnswerPosition(int selectedAnswerPosition) {
         this.selectedAnswerPosition = selectedAnswerPosition;
-        if(selectedAnswerPosition == 99) setSelectedAnswer("");
-        else if(type == Type.MULTIPLE) setSelectedAnswer(getAllAnswers().get(selectedAnswerPosition));
-        else if(selectedAnswerPosition == 0) setSelectedAnswer("True");
-        else setSelectedAnswer("False");
     }
 
     public List<String> getAllAnswers() {
@@ -82,19 +70,19 @@ public class Question {
         this.category = category;
     }
 
-    public Type getType() {
+    public EType getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(EType type) {
         this.type = type;
     }
 
-    public Difficulty getDifficulty() {
+    public EDifficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
+    public void setDifficulty(EDifficulty difficulty) {
         this.difficulty = difficulty;
     }
 

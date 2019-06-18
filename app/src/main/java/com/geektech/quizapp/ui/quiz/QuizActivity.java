@@ -3,16 +3,14 @@ package com.geektech.quizapp.ui.quiz;
 import androidx.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -38,9 +36,6 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
         context.startActivity(intent);
     }
 
-    private int amount;
-    private String difficulty;
-
     private QuizViewModel quizViewModel;
     private ProgressBar progressBarLoading;
     private ProgressBar progressBarQuestions;
@@ -51,7 +46,6 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
     private TextView buttonSkip;
     private TextView textProgressOfQuestions;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,19 +58,19 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
         textProgressOfQuestions = findViewById(R.id.quiz_progress_text);
 
         buttonSkip = findViewById(R.id.quiz_skip);
-        buttonSkip.setOnClickListener(view -> quizViewModel.setAnswer(99));
+        buttonSkip.setOnClickListener(view -> quizViewModel.skipAnswer());
         imageBack = findViewById(R.id.quiz_image_back);
         imageBack.setOnClickListener(view -> quizViewModel.preqQuestion());
 
         initRecycler();
 
         Intent intent = getIntent();
-        amount = intent.getIntExtra(EXTRA_AMOUNT,10);
-        difficulty = intent.getStringExtra(EXTRA_DIFFICULTY);
-        initViewModel();
+        int amount = intent.getIntExtra(EXTRA_AMOUNT,10);
+        String difficulty = intent.getStringExtra(EXTRA_DIFFICULTY);
+        initViewModel(amount,difficulty);
     }
 
-    private void initViewModel() {
+    private void initViewModel(int amount,String difficulty) {
 
         quizViewModel = ViewModelProviders.of(this,new QuizViewModel(amount,difficulty))
                 .get(QuizViewModel.class);
@@ -122,14 +116,14 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
             }
         });
 
-        quizViewModel.isFinishedQuiz.observe(this, new Observer<Long>() {
+        quizViewModel.finishEvent.observe(this, new Observer<Long>() {
             @Override
             public void onChanged(Long id) {
                 ResultActivity.start(QuizActivity.this,id);
             }
         });
 
-        quizViewModel.isCanceledQuiz.observe(this, new Observer<Boolean>() {
+        quizViewModel.cancelEvent.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 finish();
@@ -153,5 +147,10 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
     @Override
     public void onClick(int answerPosition, int adapterPosition) {
         quizViewModel.setAnswer(answerPosition);
+    }
+
+    @Override
+    public void onBackPressed() {
+        quizViewModel.preqQuestion();
     }
 }

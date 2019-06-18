@@ -59,7 +59,7 @@ public class ResultActivity extends AppCompatActivity {
                 textDifficulty.setText(String.valueOf(quizResult.getDifficulty()));
                 double stats = (double) quizResult.getCorrectAnswers() / (double)quizResult.getQuestions().size() * 100.0;
                 textStats.setText((int)Math.round(stats) + " %");
-                textCategory.setText("Category: " + quizResult.getCategory());
+                textCategory.setText(String.format("Category: %s", quizResult.getCategory()));
             }
         });
     }

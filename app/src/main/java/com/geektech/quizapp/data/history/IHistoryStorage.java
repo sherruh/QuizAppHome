@@ -1,5 +1,7 @@
 package com.geektech.quizapp.data.history;
 
+import androidx.lifecycle.LiveData;
+
 import com.geektech.quizapp.model.QuizResult;
 
 import java.util.List;
@@ -12,7 +14,7 @@ public interface IHistoryStorage {
 
     void deleteQuizResult(long id);
 
-    List<QuizResult> getAll();
+    LiveData<List<QuizResult>> getAll();
 
     void deleteAll();
 }
