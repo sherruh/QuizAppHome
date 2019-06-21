@@ -33,8 +33,6 @@ public class Question {
 
     private ArrayList<String> allAnswers;
 
-    private boolean isAnswered;
-
     public Question(String category, EType type, EDifficulty difficulty,
                     String question, String correctAnswer, List<String> incorrectAnswers) {
         this.category = category;
@@ -43,7 +41,6 @@ public class Question {
         this.question = question;
         this.correctAnswer = correctAnswer;
         this.incorrectAnswers = incorrectAnswers;
-        isAnswered = false;
     }
 
     public void setSelectedAnswerPosition(int selectedAnswerPosition) {
@@ -123,11 +120,4 @@ public class Question {
         this.selectedAnswer = selectedAnswer;
     }
 
-    public boolean isAnswered() {
-        return isAnswered;
-    }
-
-    public void setAnswered(boolean answered) {
-        isAnswered = answered;
-    }
 }

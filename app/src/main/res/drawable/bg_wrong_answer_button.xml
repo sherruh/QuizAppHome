@@ -4,6 +4,6 @@
     android:gravity="center"
     android:textColor="@color/blue"
     android:background="?selectableItemBackground">
-    <stroke android:width="5px" android:color="@color/blue" />
+    <stroke android:width="5px" android:color="@color/light_green" />
     <corners android:radius="8dp"/>
 </shape>

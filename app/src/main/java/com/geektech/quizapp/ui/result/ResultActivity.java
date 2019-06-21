@@ -8,6 +8,7 @@ import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.geektech.quizapp.R;
@@ -30,6 +31,7 @@ public class ResultActivity extends AppCompatActivity {
     private TextView textCorrectAnswers;
     private TextView textStats;
     private TextView textCategory;
+    private TextView textFinish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class ResultActivity extends AppCompatActivity {
         textDifficulty = cardViewResult.findViewById(R.id.result_text_difficulty);
         textStats = cardViewResult.findViewById(R.id.result_text_result);
         textCategory = cardViewResult.findViewById(R.id.result_text_category);
+        textFinish = findViewById(R.id.result_text_finish);
+        textFinish.setOnClickListener(v -> finish());
     }
 
     private void initViewModel() {

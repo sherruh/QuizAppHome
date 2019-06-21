@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 import android.util.Log;
+import android.util.Pair;
 
 import com.geektech.quizapp.App;
 import com.geektech.quizapp.data.IQuizRepository;
@@ -27,8 +28,10 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
     MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     MutableLiveData<Integer> numberOfCurrentQuestion = new MutableLiveData<>();
     MutableLiveData<String> currentCategory = new MutableLiveData<>();
+    MutableLiveData<Pair<Integer,Integer>> checkingAnswersResult = new MutableLiveData<>();
     SingleLiveEvent<Long> finishEvent = new SingleLiveEvent<>();
     SingleLiveEvent<Boolean> cancelEvent = new SingleLiveEvent<>();
+    SingleLiveEvent<Integer> skipAnswerEvent = new SingleLiveEvent<>();
 
     public QuizViewModel(int amount, String difficulty) {
 
@@ -120,14 +123,14 @@ public class QuizViewModel extends ViewModel implements ViewModelProvider.Factor
     }
 
     public void skipAnswer(){
-        setAnswer(99);
+        questionsCache.get(numberOfCurrentQuestion.getValue()).setSelectedAnswer("");
+        nextQuestion();
     }
 
     public void setAnswer(int answerPostion){
         questionsCache.get(numberOfCurrentQuestion.getValue()).setSelectedAnswerPosition(answerPostion);
 
-        if(answerPostion == 99) questionsCache.get(numberOfCurrentQuestion.getValue()).setSelectedAnswer("");
-        else if(questionsCache.get(numberOfCurrentQuestion.getValue()).getType() == EType.MULTIPLE)
+        if(questionsCache.get(numberOfCurrentQuestion.getValue()).getType() == EType.MULTIPLE)
             questionsCache.get(numberOfCurrentQuestion.getValue())
                     .setSelectedAnswer(questionsCache.get(numberOfCurrentQuestion.getValue())
                             .getAllAnswers().get(answerPostion));

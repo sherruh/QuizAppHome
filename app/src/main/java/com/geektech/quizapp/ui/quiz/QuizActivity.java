@@ -82,11 +82,13 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
                     progressBarQuestions.setVisibility(View.INVISIBLE);
                     textProgressOfQuestions.setVisibility(View.INVISIBLE);
                     textCategory.setVisibility(View.INVISIBLE);
+                    buttonSkip.setVisibility(View.GONE);
                 }
                 else {
                     progressBarLoading.setVisibility(View.GONE);
                     progressBarQuestions.setVisibility(View.VISIBLE);
                     textProgressOfQuestions.setVisibility(View.VISIBLE);
+                    buttonSkip.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -119,6 +121,7 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
         quizViewModel.finishEvent.observe(this, new Observer<Long>() {
             @Override
             public void onChanged(Long id) {
+                finish();
                 ResultActivity.start(QuizActivity.this,id);
             }
         });

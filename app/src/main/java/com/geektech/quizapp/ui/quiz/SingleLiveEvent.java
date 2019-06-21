@@ -1,5 +1,7 @@
 package com.geektech.quizapp.ui.quiz;
 
+import android.support.v4.media.session.PlaybackStateCompat;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -27,5 +29,8 @@ public class SingleLiveEvent<T> extends MutableLiveData<T> {
     public void quizFinish(long id) {
         setValue(null);
     }
+
+    @MainThread
+    public void skipAnswer(int id){setValue(null);}
 
 }
