@@ -127,6 +127,32 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder
         setDefaultBackground();
     }
 
+    public void showReactionOnSkipping(OnAnimationFinishedCallback callback){
+
+        int colorFrom = itemView.getResources().getColor(R.color.blue);
+        int colorTo = itemView.getResources().getColor(R.color.light_green);
+
+        View view = itemView.findViewById(positionOfCorrectAnswer);
+
+        ValueAnimator colorAnimationCorrect;
+        colorAnimationCorrect = ValueAnimator.ofObject( new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimationCorrect.setDuration(300);
+        colorAnimationCorrect.setRepeatCount(2);
+        colorAnimationCorrect.setStartDelay(20);
+        colorAnimationCorrect.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                ((TextView)view).setTextColor((int)animation.getAnimatedValue());
+            }
+        });
+        colorAnimationCorrect.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation){
+                callback.finished();
+            }});
+        colorAnimationCorrect.start();
+    }
+
     public void showReactionOnCorrectAnswer(View view){
 
         int colorFrom = view.getResources().getColor(R.color.blue);

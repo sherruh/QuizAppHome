@@ -26,6 +26,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.questions.clear();
         this.questions.addAll(questions);
         notifyDataSetChanged();
+
     }
 
     @NonNull

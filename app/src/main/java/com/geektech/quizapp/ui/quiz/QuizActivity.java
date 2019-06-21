@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.geektech.quizapp.R;
 import com.geektech.quizapp.model.Question;
+import com.geektech.quizapp.ui.quiz.recycler.OnAnimationFinishedCallback;
+import com.geektech.quizapp.ui.quiz.recycler.QuestionViewHolder;
 import com.geektech.quizapp.ui.quiz.recycler.QuestionsAdapter;
 import com.geektech.quizapp.ui.result.ResultActivity;
 
@@ -58,7 +60,12 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
         textProgressOfQuestions = findViewById(R.id.quiz_progress_text);
 
         buttonSkip = findViewById(R.id.quiz_skip);
-        buttonSkip.setOnClickListener(view -> quizViewModel.skipAnswer());
+        buttonSkip.setOnClickListener(view -> {
+            ((QuestionViewHolder)recyclerQuestions.findViewHolderForAdapterPosition
+                    (quizViewModel.numberOfCurrentQuestion.getValue())).
+                    showReactionOnSkipping(() -> quizViewModel.skipAnswer());
+
+        });
         imageBack = findViewById(R.id.quiz_image_back);
         imageBack.setOnClickListener(view -> quizViewModel.preqQuestion());
 
