@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.geektech.quizapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".App"
@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.result.ResultActivity"></activity>
+        <activity android:name=".ui.settings.ClearHistoryActivity"></activity>
+        <activity android:name=".ui.result.ResultActivity" />
         <activity android:name=".ui.quiz.QuizActivity" />
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>

@@ -60,11 +60,14 @@ public class QuizActivity extends AppCompatActivity implements QuestionsAdapter.
         textProgressOfQuestions = findViewById(R.id.quiz_progress_text);
 
         buttonSkip = findViewById(R.id.quiz_skip);
-        buttonSkip.setOnClickListener(view -> {
-            ((QuestionViewHolder)recyclerQuestions.findViewHolderForAdapterPosition
+        buttonSkip.setOnClickListener((View view) -> {
+            buttonSkip.setVisibility(View.INVISIBLE);
+            ((QuestionViewHolder) recyclerQuestions.findViewHolderForAdapterPosition
                     (quizViewModel.numberOfCurrentQuestion.getValue())).
-                    showReactionOnSkipping(() -> quizViewModel.skipAnswer());
-
+                    showReactionOnSkipping(() -> {
+                        quizViewModel.skipAnswer();
+                        buttonSkip.setVisibility(View.VISIBLE);
+                    });
         });
         imageBack = findViewById(R.id.quiz_image_back);
         imageBack.setOnClickListener(view -> quizViewModel.preqQuestion());

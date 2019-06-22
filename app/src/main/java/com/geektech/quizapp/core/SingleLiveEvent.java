@@ -1,4 +1,4 @@
-package com.geektech.quizapp.ui.quiz;
+package com.geektech.quizapp.core;
 
 import android.support.v4.media.session.PlaybackStateCompat;
 
@@ -32,5 +32,8 @@ public class SingleLiveEvent<T> extends MutableLiveData<T> {
 
     @MainThread
     public void skipAnswer(int id){setValue(null);}
+
+    @MainThread
+    public void showDeleteResult(@Nullable T i){setValue(i);}
 
 }

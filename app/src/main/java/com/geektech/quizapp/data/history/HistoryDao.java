@@ -26,5 +26,5 @@ public interface HistoryDao {
     void delete(long id);
 
     @Query("DELETE FROM quiz_result")
-    void deleteAll();
+    int deleteAll();
 }
